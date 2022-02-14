@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Timer
 
-    const deadLine = '2022-02-11';
+    const deadLine = '2022-06-11';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const slideTo = e.target.getAttribute('data-slide-to');
 
             slideIndex = slideTo;
-            offset = +width.replace(/\D/g, '') * (slideTo - 1);
+            offset = onlyDigitals(width) * (slideTo - 1);
 
             slidesField.style.transform = `translateX(-${offset}px)`;
 
