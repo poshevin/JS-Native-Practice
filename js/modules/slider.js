@@ -1,41 +1,25 @@
-function slider() {
-    const arrowPrev = document.querySelector('.offer__slider-prev'),
-          slider = document.querySelector('.offer__slider'),
-          arrowNext = document.querySelector('.offer__slider-next'),
-          currentNumber = document.querySelector('#current'),
-          totalNumber = document.querySelector('#total'),
-          slides = document.querySelectorAll('.offer__slide'),
-          slidesWrapper = document.querySelector('.offer__slider-wrapper'),
-          slidesField = document.querySelector('.offer__slider-inner'),
-          width = window.getComputedStyle(slidesWrapper).width;
+function slider({container, slide, arrowNext, arrowPrev, totalNumber, currentNumber, wrapper, field}) {
 
     let slideIndex = 1,
         offset = 0;
 
-    function onlyDigitals(e) {
-        let number = +e.replace(/\D/g, '');
-        return number;
-    }
+    const prev = document.querySelector(arrowPrev),
+         slider = document.querySelector(container),
+         next = document.querySelector(arrowNext),
+         current = document.querySelector(currentNumber),
+         total = document.querySelector(totalNumber),
+         slides = document.querySelectorAll(slide),
+         slidesWrapper = document.querySelector(wrapper),
+         slidesField = document.querySelector(field),
+         width = window.getComputedStyle(slidesWrapper).width;
 
-    function currentText() {
-        if (slides.length < 10) {
-            currentNumber.textContent = `0${slideIndex}`;
-        } else {
-            currentNumber.textContent = slideIndex;
-        }
-    }
-
-    function visibleDots() {
-        dots.forEach(dot => dot.style.opacity = '.5');
-        dots[slideIndex - 1].style.opacity = 1;
-    }
 
     if (slides.length < 10) {
-        totalNumber.textContent = `0${slides.length}`;
-        currentNumber.textContent = `0${slideIndex}`;
+        total.textContent = `0${slides.length}`;
+        current.textContent = `0${slideIndex}`;
     } else {
-        totalNumber.textContent = slides.length;
-        currentNumber.textContent = slideIndex;
+        total.textContent = slides.length;
+        current.textContent = slideIndex;
     }
 
     slidesField.style.width = 100 * slides.length + '%';
@@ -51,9 +35,9 @@ function slider() {
     slider.style.position = 'relative';
 
     const indicators = document.createElement('ol'),
-          dots = [];
-    indicators.classList.add('carousel-indicators');
-    indicators.style.cssText = `
+        dots = [];
+        indicators.classList.add('carousel-indicators');
+        indicators.style.cssText = `
         position: absolute;
         right: 0;
         bottom: 0;
@@ -64,7 +48,7 @@ function slider() {
         margin-right: 15%;
         margin-left: 15%;
         list-style: none;
-    `;
+        `;
     slider.append(indicators);
 
     for (let i = 0; i < slides.length; i++) {
@@ -92,11 +76,28 @@ function slider() {
         dots.push(dot);
     }
 
-    arrowNext.addEventListener('click', () => {
+
+
+    function currentText() {
+        if (slides.length < 10) {
+            current.textContent = `0${slideIndex}`;
+        } else {
+            current.textContent = slideIndex;
+        }
+    }
+
+    function visibleDots() {
+        dots.forEach(dot => dot.style.opacity = '.5');
+        dots[slideIndex - 1].style.opacity = 1;
+    }
+
+
+
+    next.addEventListener('click', () => {
         if (offset == onlyDigitals(width) * (slides.length - 1)) {
             offset = 0;
         } else {
-            offset +=  onlyDigitals(width);
+            offset += onlyDigitals(width);
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
@@ -112,7 +113,7 @@ function slider() {
         visibleDots();
     });
 
-    arrowPrev.addEventListener('click', () => {
+    prev.addEventListener('click', () => {
         if (offset == 0) {
             offset = onlyDigitals(width) * (slides.length - 1);
         } else {
@@ -147,6 +148,10 @@ function slider() {
         });
     });
 
+    function onlyDigitals(e) {
+        let number = +e.replace(/\D/g, '');
+        return number;
+    }
 }
 
 export default slider;
