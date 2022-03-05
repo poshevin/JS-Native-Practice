@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/poshevin/JS-Native-Practice#readme",
   "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11",
     "json-server": "^0.17.0",
     "webpack": "^5.69.1",
     "webpack-cli": "^4.9.2"
